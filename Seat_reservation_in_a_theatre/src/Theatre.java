@@ -1,4 +1,4 @@
-import java.util.Scanner;
+import java.util.*;
 
 public class Theatre {
     private char[][] firstClassSeats;
@@ -125,7 +125,54 @@ public class Theatre {
     }
 
     public boolean cancelReservation(int seatClass, int row, int column) {
-        return false;
+        switch (seatClass){
+            case 1:
+                if(firstClassSeats[row][column]=='O') {
+                    try {
+                        throw new RuntimeException("This seat is already empty");
+                    }
+                    catch (Exception E) {
+                        return false;
+                    }
+                }
+                else{
+                    firstClassSeats[row][column] = 'O';
+                    return true;
+                }
+            case 2:
+                if(secondClassSeats[row][column]=='O') {
+                    try {
+                        throw new RuntimeException("This seat is already empty");
+                    }
+                    catch (Exception E) {
+                        return false;
+                    }
+                }
+                else{
+                    secondClassSeats[row][column] = 'O';
+                    return true;
+                }
+            case 3:
+                if(thirdClassSeats[row][column]=='O') {
+                    try {
+                        throw new RuntimeException("This seat is already empty");
+                    }
+                    catch (Exception E) {
+                        return false;
+                    }
+                }
+                else{
+                    thirdClassSeats[row][column] = 'O';
+                    return true;
+                }
+            default:
+                try {
+                    throw new RuntimeException("Invalid seating class");
+                }
+                catch (Exception E){
+                    return false;
+                }
+        }
     }
 
     public void resetReservations() {
