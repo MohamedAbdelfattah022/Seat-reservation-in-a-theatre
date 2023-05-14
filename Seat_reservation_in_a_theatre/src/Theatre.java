@@ -13,17 +13,7 @@ public class Theatre {
         secondClassSeats = new char[8][5];
         thirdClassSeats = new char[10][5];
         totalCost = 0;
-        for (int i = 0; i < 4; i++)
-            for (int j = 0; j < 5; j++)
-                firstClassSeats[i][j] = 'O';
-
-        for (int i = 0; i < 8; i++)
-            for (int j = 0; j < 5; j++)
-                secondClassSeats[i][j] = 'O';
-
-        for (int i = 0; i < 10; i++)
-            for (int j = 0; j < 5; j++)
-                thirdClassSeats[i][j] = 'O';
+        resetReservations();
     }
 
     /*
@@ -138,6 +128,7 @@ public class Theatre {
                 else{
                     firstClassSeats[row][column] = 'O';
                     System.out.println("Success, 50 EGP has been refunded to your account.");
+                    totalCost -= 50;
                     return true;
                 }
             case 2:
@@ -152,6 +143,7 @@ public class Theatre {
                 else{
                     secondClassSeats[row][column] = 'O';
                     System.out.println("Success, 15 EGP has been refunded to your account.");
+                    totalCost -= 15;
                     return true;
                 }
             case 3:
@@ -166,6 +158,7 @@ public class Theatre {
                 else{
                     thirdClassSeats[row][column] = 'O';
                     System.out.println("Success, 10 EGP has been refunded to your account.");
+                    totalCost -= 10;
                     return true;
                 }
             default:
@@ -179,6 +172,17 @@ public class Theatre {
     }
 
     public void resetReservations() {
+        for (int i = 0; i < 4; i++)
+            for (int j = 0; j < 5; j++)
+                firstClassSeats[i][j] = 'O';
+
+        for (int i = 0; i < 8; i++)
+            for (int j = 0; j < 5; j++)
+                secondClassSeats[i][j] = 'O';
+
+        for (int i = 0; i < 10; i++)
+            for (int j = 0; j < 5; j++)
+                thirdClassSeats[i][j] = 'O';
     }
 
     public String getSeatStatus(int seatClass) {
