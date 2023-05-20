@@ -1,175 +1,224 @@
 package com.example.demo;
+
 import java.util.*;
 
+import javafx.event.*;
+import javafx.fxml.*;
+import javafx.scene.*;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.stage.*;
+
+import java.io.IOException;
+
 public class Theatre {
-    private char[][] firstClassSeats;
-    private char[][] secondClassSeats;
-    private char[][] thirdClassSeats;
+    @FXML
+    private char[] firstClassSeats;
+    private char[] secondClassSeats;
+    private char[] thirdClassSeats;
     private int totalCost;
+    private int totalCashback;
     private Scanner sc;
+    @FXML
+    private AnchorPane firstClass;
+    @FXML
+    private AnchorPane secondClass;
+    @FXML
+    private AnchorPane thirdClass;
+
 
     public Theatre() {
         sc = new Scanner(System.in);
-        firstClassSeats = new char[4][5];
-        secondClassSeats = new char[8][5];
-        thirdClassSeats = new char[10][5];
+        firstClassSeats = new char[20];
+        secondClassSeats = new char[40];
+        thirdClassSeats = new char[50];
         totalCost = 0;
-        for (int i = 0; i < 4; i++)
-            for (int j = 0; j < 5; j++)
-                firstClassSeats[i][j] = 'O';
+        totalCashback=0;
+        for (int i = 0; i < 20; i++)
+            firstClassSeats[i] = 'O';
 
-        for (int i = 0; i < 8; i++)
-            for (int j = 0; j < 5; j++)
-                secondClassSeats[i][j] = 'O';
+        for (int i = 0; i < 40; i++)
+            secondClassSeats[i] = 'O';
 
-        for (int i = 0; i < 10; i++)
-            for (int j = 0; j < 5; j++)
-                thirdClassSeats[i][j] = 'O';
+        for (int i = 0; i < 50; i++)
+            thirdClassSeats[i] = 'O';
     }
 
-    public int getTotalCost() {
-        return totalCost;
+    public void switchToStartMenu(ActionEvent event) throws IOException {
+        Stage stage;
+        Scene scene;
+        Parent root;
+        root = FXMLLoader.load(getClass().getResource("start.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
-    public void setTotalCost(int totalCost) {
-        this.totalCost = totalCost;
+
+
+    public void info() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Seat Reservation");
+        alert.setHeaderText(null);
+        alert.setContentText("reset Successfully.\nTotal Cashback: "+ totalCashback);
+        alert.showAndWait();
     }
 
-    public char[][] getFirstClassSeats() {
-        return firstClassSeats;
-    }
+    public void ticketReservation(ActionEvent event) {
 
-    public char[][] getSecondClassSeats() {
-        return secondClassSeats;
-    }
+        Button button = (Button) event.getSource();
+        String buttonText = button.getText();
+        // Extract the seat number from the button text
+        StringTokenizer tokenizer = new StringTokenizer(buttonText, ")");
+        int seatNumber = Integer.parseInt(tokenizer.nextToken());
 
-    public char[][] getThirdClassSeats() {
-        return thirdClassSeats;
-    }
-
-    public void reserveSeat(int seatClass, int seatNumber, char[][] arr, int row) {
-        if (seatNumber > row * 5 || seatNumber < 1) {
-            System.out.println("Please enter a valid seat number.");
+        // Determine the class and index of the seat based on the button's parent
+        char[] seatArray;
+        int seatIndex;
+        if (button.getParent() == firstClass) {
+            seatArray = firstClassSeats;
+            seatIndex = seatNumber - 1;
         }
-
-        int count = 0, i = 0, j = 0;
-        for (i = 0; i < row; i++) {
-            for (j = 0; j < 5 && count != seatNumber; j++) {
-                count++;
-                if (count == seatNumber) {
-                    if (arr[i][j] == 'O') {
-                        arr[i][j] = 'X';
-                        if (seatClass == 1) {
-                            totalCost += 50;
-                        } else if (seatClass == 2) {
-                            totalCost += 15;
-                        } else if (seatClass == 3) {
-                            totalCost += 10;
-                        }
-                    } else {
-                        System.out.println("This seat is already reserved or not found.");
-                    }
-                }
-            }
+        else if (button.getParent() == secondClass) {
+            seatArray = secondClassSeats;
+            seatIndex = seatNumber - 1;
         }
-    }
+        else if (button.getParent() == thirdClass) {
+            seatArray = thirdClassSeats;
+            seatIndex = seatNumber - 1;
+        }else{return ;}
 
-    public void printArray(char[][] arr, int row) {
-        int count = 1;
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < 5; j++) {
-                System.out.print(count + "," + arr[i][j] + " ");
-                count++;
-            }
-            System.out.println("\n");
-        }
-    }
 
-    public void ticketReservation(int seatClass) {
-        System.out.println("Choose the class Number you want to make a reservation in:");
-        System.out.println("1) First Class");
-        System.out.println("2) Second Class");
-        System.out.println("3) Third Class");
-        int seat;
+        if (seatArray[seatIndex] == 'O') {
+            // Reserve the seat and update the seat array and button text
+            seatArray[seatIndex] = 'X';
+            button.setText(buttonText.replace("O", "X"));
 
-        if (seatClass == 1) {
-            printArray(firstClassSeats, 4);
-            System.out.println("Enter the seat Number (enter -1 to finish):");
-            seat = sc.nextInt();
-            while (seat != -1) {
-                reserveSeat(seatClass, seat, firstClassSeats, 4);
-                System.out.println("Enter the seat Number (enter -1 to finish):");
-                printArray(firstClassSeats, 4);
-                seat = sc.nextInt();
+            // Calculate and display the updated total cost
+            if (button.getParent() == firstClass) {
+                totalCost += 50;
+            } else if (button.getParent() == secondClass) {
+                totalCost += 15;
+            } else if (button.getParent() == thirdClass) {
+                totalCost += 10;
             }
 
-        } else if (seatClass == 2) {
-            printArray(secondClassSeats, 8);
-            System.out.println("Enter the seat Number (enter -1 to finish):");
-            seat = sc.nextInt();
-            while (seat != -1) {
-                reserveSeat(seatClass, seat, secondClassSeats, 8);
-                System.out.println("Enter the seat Number (enter -1 to finish):");
-                seat = sc.nextInt();
-            }
 
-        } else if (seatClass == 3) {
-            printArray(thirdClassSeats, 10);
-            System.out.println("Enter the seat Number (enter -1 to finish):");
-            seat = sc.nextInt();
-            while (seat != -1) {
-                reserveSeat(seatClass, seat, thirdClassSeats, 10);
-                System.out.println("Enter the seat Number (enter -1 to finish):");
-                seat = sc.nextInt();
+            if (button.getParent() == firstClass) {
+                TextField totalCostField = (TextField) firstClass.lookup("#totalCostField");
+                totalCostField.setText(String.valueOf(totalCost));
+            } else if (button.getParent() == secondClass) {
+                TextField totalCostField = (TextField) secondClass.lookup("#totalCostField");
+                totalCostField.setText(String.valueOf(totalCost));
+            } else if (button.getParent() == thirdClass) {
+                TextField totalCostField = (TextField) thirdClass.lookup("#totalCostField");
+                totalCostField.setText(String.valueOf(totalCost));
             }
 
         } else {
-            System.out.println("Please Choose a valid Class");
-            return;
+            System.out.println("This seat is already reserved.");
+            cancelReservation(event);
+            info();
         }
-
-        System.out.println("Total cost: $" + totalCost);
     }
 
-    public void cancelReservation(int seatClass, int seatNumber, char[][] arr, int row) {
-        if (seatNumber > row * 5 || seatNumber < 1) {
-            System.out.println("Please enter a valid seat number.");
-        }
 
-        int count = 0, i = 0, j = 0;
-        for (i = 0; i < row; i++) {
-            for (j = 0; j < 5 && count != seatNumber; j++) {
-                count++;
-                if (count == seatNumber) {
-                    if (arr[i][j] == 'X') {
-                        arr[i][j] = 'O';
-                        if (seatClass == 1) {
-                            totalCost -= 50;
-                        } else if (seatClass == 2) {
-                            totalCost -= 15;
-                        } else if (seatClass == 3) {
-                            totalCost -= 10;
-                        }
-                    } else {
-                        System.out.println("This seat is already Cancelled or not found.");
-                    }
-                }
+    public void cancelReservation(ActionEvent event) {
+        Button button = (Button) event.getSource();
+        String buttonText = button.getText();
+        // Extract the seat number from the button text
+        StringTokenizer tokenizer = new StringTokenizer(buttonText, ")");
+        int seatNumber = Integer.parseInt(tokenizer.nextToken());
+
+        // Determine the class and index of the seat based on the button's parent
+        char[] seatArray;
+        int seatIndex;
+        if (button.getParent() == firstClass) {
+            seatArray = firstClassSeats;
+            seatIndex = seatNumber - 1;
+        }
+        else if (button.getParent() == secondClass) {
+            seatArray = secondClassSeats;
+            seatIndex = seatNumber - 1;
+        }
+        else if (button.getParent() == thirdClass) {
+            seatArray = thirdClassSeats;
+            seatIndex = seatNumber - 1;
+        }else{return ;}
+
+
+        if (seatArray[seatIndex] == 'X') {
+            // Reserve the seat and update the seat array and button text
+            seatArray[seatIndex] = 'O';
+            button.setText(buttonText.replace("X", "O"));
+
+            // Calculate total cost
+            if (button.getParent() == firstClass) {
+                totalCost -= 50;
+                totalCashback+=50;
+            } else if (button.getParent() == secondClass) {
+                totalCost -= 15;
+                totalCashback+=15;
+            } else if (button.getParent() == thirdClass) {
+                totalCost -= 10;
+                totalCashback+=10;
             }
+
+            if (button.getParent() == firstClass) {
+                TextField totalCostField = (TextField) firstClass.lookup("#totalCostField");
+                totalCostField.setText(String.valueOf(totalCost));
+            } else if (button.getParent() == secondClass) {
+                TextField totalCostField = (TextField) secondClass.lookup("#totalCostField");
+                totalCostField.setText(String.valueOf(totalCost));
+            } else if (button.getParent() == thirdClass) {
+                TextField totalCostField = (TextField) thirdClass.lookup("#totalCostField");
+                totalCostField.setText(String.valueOf(totalCost));
+            }
+
+        } else {
+            return ;
         }
     }
 
-    public void resetReservations() {
-        for (int i = 0; i < 4; i++)
-            for (int j = 0; j < 5; j++)
-                firstClassSeats[i][j] = 'O';
+    public void resetReservations(ActionEvent event) {
+        Button button = (Button) event.getSource();
+        totalCost=0;
+        totalCashback=0;
+        if (button.getParent() == firstClass){
+            for (int i = 0; i < 20; i++) {
+                firstClassSeats[i] = 'O';
+            }
+            firstClass.lookupAll(".button").forEach(e -> {
+                Button btn = (Button) e;
+                btn.setText(btn.getText().replace("X","O"));
+            });
+            TextField totalCostField = (TextField) firstClass.lookup("#totalCostField");
+            totalCostField.setText(String.valueOf(totalCost));
+        }
 
-        for (int i = 0; i < 8; i++)
-            for (int j = 0; j < 5; j++)
-                secondClassSeats[i][j] = 'O';
+        if (button.getParent() == secondClass){
+            for (int i = 0; i < 40; i++) {
+                secondClassSeats[i] = 'O';
+            }
+            secondClass.lookupAll(".button").forEach(e -> {
+                Button btn = (Button) e;
+                btn.setText(btn.getText().replace("X","O"));
+            });
+            TextField totalCostField = (TextField) secondClass.lookup("#totalCostField");
+            totalCostField.setText(String.valueOf(totalCost));
+        }
 
-        for (int i = 0; i < 10; i++)
-            for (int j = 0; j < 5; j++)
-                thirdClassSeats[i][j] = 'O';
+        if (button.getParent() == thirdClass){
+            for (int i = 0; i < 50; i++) {
+                thirdClassSeats[i] = 'O';
+            }
+            thirdClass.lookupAll(".button").forEach(e -> {
+                Button btn = (Button) e;
+                btn.setText(btn.getText().replace("X","O"));
+            });
+            TextField totalCostField = (TextField) thirdClass.lookup("#totalCostField");
+            totalCostField.setText(String.valueOf(totalCost));
+        }
     }
-
 }

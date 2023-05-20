@@ -13,7 +13,6 @@ public class SceneController {
     private Stage stage;
     private Scene scene;
     private Parent root;
-
     public void switchToStartMenu(ActionEvent event) throws IOException {
         root =FXMLLoader.load(getClass().getResource("start.fxml"));
         stage= (Stage)((Node)event.getSource()).getScene().getWindow();

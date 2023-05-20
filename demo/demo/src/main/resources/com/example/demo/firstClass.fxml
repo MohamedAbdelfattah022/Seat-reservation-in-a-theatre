@@ -2,44 +2,47 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="407.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.SceneController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="407.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.Theatre">
    <children>
       <AnchorPane fx:id="firstClass" prefHeight="328.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button layoutX="493.0" layoutY="271.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="493.0" layoutY="218.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="493.0" layoutY="165.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="383.0" layoutY="271.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="383.0" layoutY="218.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="383.0" layoutY="165.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="278.0" layoutY="271.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="278.0" layoutY="218.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="278.0" layoutY="165.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="164.0" layoutY="271.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="164.0" layoutY="218.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="164.0" layoutY="165.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="56.0" layoutY="271.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="56.0" layoutY="218.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="56.0" layoutY="165.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="56.0" layoutY="110.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="164.0" layoutY="110.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="278.0" layoutY="110.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="383.0" layoutY="110.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="493.0" layoutY="110.0" mnemonicParsing="false" text="Button" />
+            <Button layoutX="493.0" layoutY="271.0" mnemonicParsing="false" onAction="#ticketReservation" text="20) O" />
+            <Button layoutX="493.0" layoutY="218.0" mnemonicParsing="false" onAction="#ticketReservation" text="15) O" />
+            <Button layoutX="493.0" layoutY="165.0" mnemonicParsing="false" onAction="#ticketReservation" text="10) O" />
+            <Button layoutX="383.0" layoutY="271.0" mnemonicParsing="false" onAction="#ticketReservation" text="19) O" />
+            <Button layoutX="383.0" layoutY="218.0" mnemonicParsing="false" onAction="#ticketReservation" text="14) O" />
+            <Button layoutX="383.0" layoutY="165.0" mnemonicParsing="false" onAction="#ticketReservation" text="9) O" />
+            <Button layoutX="278.0" layoutY="271.0" mnemonicParsing="false" onAction="#ticketReservation" text="18) O" />
+            <Button layoutX="278.0" layoutY="218.0" mnemonicParsing="false" onAction="#ticketReservation" text="13) O" />
+            <Button layoutX="278.0" layoutY="165.0" mnemonicParsing="false" onAction="#ticketReservation" text="8) O" />
+            <Button layoutX="164.0" layoutY="271.0" mnemonicParsing="false" onAction="#ticketReservation" text="17) O" />
+            <Button layoutX="164.0" layoutY="218.0" mnemonicParsing="false" onAction="#ticketReservation" text="12) O" />
+            <Button layoutX="164.0" layoutY="165.0" mnemonicParsing="false" onAction="#ticketReservation" text="7) O" />
+            <Button layoutX="56.0" layoutY="271.0" mnemonicParsing="false" onAction="#ticketReservation" text="16) O" />
+            <Button layoutX="56.0" layoutY="218.0" mnemonicParsing="false" onAction="#ticketReservation" text="11) O" />
+            <Button layoutX="56.0" layoutY="165.0" mnemonicParsing="false" onAction="#ticketReservation" text="6) O" />
+            <Button fx:id="b1" layoutX="56.0" layoutY="110.0" mnemonicParsing="false" onAction="#ticketReservation" text="1) O" />
+            <Button layoutX="164.0" layoutY="110.0" mnemonicParsing="false" onAction="#ticketReservation" text="2) O" />
+            <Button layoutX="278.0" layoutY="110.0" mnemonicParsing="false" onAction="#ticketReservation" text="3) O" />
+            <Button layoutX="383.0" layoutY="110.0" mnemonicParsing="false" onAction="#ticketReservation" text="4) O" />
+            <Button layoutX="493.0" layoutY="110.0" mnemonicParsing="false" onAction="#ticketReservation" text="5) O" />
             <Button layoutX="499.0" layoutY="351.0" mnemonicParsing="false" onAction="#switchToStartMenu" text="Back" />
             <Label layoutX="169.0" layoutY="41.0" prefHeight="22.0" prefWidth="265.0" text="Choose the seats you want to reserve">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="53.0" layoutY="354.0" prefHeight="19.0" prefWidth="81.0" text="Total Cost:">
+            <Label fx:id="totalCostLabel" layoutX="53.0" layoutY="354.0" prefHeight="19.0" prefWidth="81.0" text="Total Cost:">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
+            <TextField id="totalCostField" editable="false" layoutX="128.0" layoutY="351.0" />
+            <Button layoutX="429.0" layoutY="351.0" mnemonicParsing="false" onAction="#resetReservations" text="Reset" />
          </children>
       </AnchorPane>
    </children>
